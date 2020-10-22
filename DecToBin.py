@@ -11,3 +11,4 @@ if __name__ == '__main__':
     numVal=int(input("Enter a decimal number: "))
     DecToBin(numVal) 
    
+-
