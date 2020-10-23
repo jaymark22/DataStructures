@@ -7,9 +7,6 @@ if __name__ == '__main__':
     num = int(input("Enter a decimal number: "))
     print( "Binary equivalent: ",decimalToBinary(num))  
 '''
-
-
-
 '''
 #Using Recursive Algorithm
 def DecToBin(num):
@@ -22,8 +19,6 @@ def DecToBin(num):
 numVal = int(input("Enter a decimal number: "))
 DecToBin(numVal)
 '''
-
-
 #Using Recursive Algorithm
 listNum = []
 
