@@ -12,10 +12,11 @@ cars = ['ABC 1234', 'DEF 5678', 'GHI 9101', 'JKL 1213', 'MNO 1415', 'PQR 1617', 
 def carEn():
     for car in carEntered.keys():
         carEntered[car] += 1
-
+    tempGarage.clear()
 def carEx():
     for car in carExited.keys():
         carExited[car] += 1
+    tempGarage.pop()
 
 def newCar():
     return
@@ -48,22 +49,23 @@ def carInit():
             e = {str(car) : 0}
             carEntered.update(e)
             i+=1
-    carEn()
+
+    for car in carEntered.keys():
+        carEntered[car] += 1
 
 def carEnt():
     i = 0
     j = len(tempGarage)
     for c in tempGarage: 
         while i < j:
-            car = tempGarage[i]
+            car = tempGarage[j-(i+1)]
             time.sleep(1)
             print("{} entered the garage".format(car))
-            carEntered[car] +=1
-            tempGarage.pop()
+            carGarage.append(car)
             checkGarage("a")
             print("")
             i+=1
-
+    carEn()
 def carExt():
     i = 0
     j = len(carGarage)
@@ -74,7 +76,8 @@ def carExt():
             print("{} exited the garage".format(car))
             e = {str(car) : 0}
             carExited.update(e)
-            carGarage.pop(-1)
+            carGarage.pop()
+            #carGarage.pop(-1)
             tempGarage.append(car)
             checkGarage("b")
             print("")
@@ -85,10 +88,13 @@ def main():
     carInit()
     time.sleep(5)
     carExt()
-    print("End of Cycle")
-    print(carEntered)
+    print("Exit", carExited)
+    print("Start of New Cycle")
     carEnt()
-    print(carEntered)
- 
+    print("Entered", carEntered)
+    carExt()
+    print("Exit", carExited)
+   
+
 main()
 
