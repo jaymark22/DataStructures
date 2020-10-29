@@ -3,19 +3,25 @@ import time
 carGarage = []
 tempGarage = []
 
-
 carEntered = {}
 carExited = {}
+carGone = []
 
 cars = ['ABC 1234', 'DEF 5678', 'GHI 9101', 'JKL 1213', 'MNO 1415', 'PQR 1617', 'STU 1819','VWX 2021', 'YZA 2223', 'BCD 2425']
 
 def carEn():
     for car in carEntered.keys():
-        carEntered[car] += 1
+        if (car not in carGone): 
+            carEntered[car] += 1
     tempGarage.clear()
+
 def carEx():
     for car in carExited.keys():
-        carExited[car] += 1
+        if (car not in carGone): 
+            carExited[car] += 1
+    yeet = len(tempGarage)
+    print("\n Car {} left the garage for good :( \n".format(tempGarage[yeet-1]))
+    carGone.append(tempGarage[yeet-1])
     tempGarage.pop()
 
 def newCar():
@@ -34,9 +40,13 @@ def checkGarage(string):
             print(" Garage has {} available space.".format(10-chkGarage))
 
 def checkCarHist():
-    return
+    print("Sum of all car entries: ", sum(carEntered.values()))
+    print(carEntered)
+    print("\nSum of all car exits: ", sum(carExited.values()))
+    print(carExited)
 
 def carInit():
+    print("[ Start of Program ]\n")
     i=0
     for c in cars: 
         while i < len(cars):
@@ -48,6 +58,7 @@ def carInit():
             print("")
             e = {str(car) : 0}
             carEntered.update(e)
+            carExited.update(e)
             i+=1
 
     for car in carEntered.keys():
@@ -66,6 +77,7 @@ def carEnt():
             print("")
             i+=1
     carEn()
+
 def carExt():
     i = 0
     j = len(carGarage)
@@ -73,12 +85,9 @@ def carExt():
         while i < j:
             car = carGarage[j-(i+1)]
             time.sleep(1)
-            print("{} exited the garage".format(car))
-            e = {str(car) : 0}
-            carExited.update(e)
-            carGarage.pop()
-            #carGarage.pop(-1)
+            print("{} transferred to the temporary garage.".format(car))
             tempGarage.append(car)
+            carGarage.pop()
             checkGarage("b")
             print("")
             i+=1
@@ -86,15 +95,20 @@ def carExt():
 
 def main():
     carInit()
+    while (len(tempGarage) or len(carGarage)) != 0: 
+        time.sleep(1)
+        print("\n[A car decided to get out of the garage.]\n")
+        carExt()
+        #print("Car Transferred: ", carExited)
+        time.sleep(1)
+        carEnt()
+        #print("\nCar Entered: \n", carEntered)
+        print("")
+        time.sleep(1)
+    checkCarHist()
     time.sleep(5)
-    carExt()
-    print("Exit", carExited)
-    print("Start of New Cycle")
-    carEnt()
-    print("Entered", carEntered)
-    carExt()
-    print("Exit", carExited)
-   
+    print("\n End of Program.")
+    print("titiw :3")
 
 main()
 
