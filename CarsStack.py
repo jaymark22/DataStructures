@@ -1,5 +1,17 @@
 import time
+import os 
+from os import system, name 
 
+def clear(): 
+
+	# for windows 
+	if name == 'nt': 
+		_ = system('cls') 
+
+	# for mac and linux(here, os.name is 'posix') 
+	else: 
+		_ = system('clear') 
+	
 carGarage = []
 tempGarage = []
 
@@ -7,7 +19,76 @@ carEntered = {}
 carExited = {}
 carGone = []
 
-cars = ['ABC 1234', 'DEF 5678', 'GHI 9101', 'JKL 1213', 'MNO 1415', 'PQR 1617', 'STU 1819','VWX 2021', 'YZA 2223', 'BCD 2425']
+#cars = ['ABC 1234', 'DEF 5678', 'GHI 9101', 'JKL 1213', 'MNO 1415', 'PQR 1617', 'STU 1819','VWX 2021', 'YZA 2223', 'BCD 2425']
+cars = []
+
+def userOption():
+    menu = """
+                [Garage Management]
+    
+                  :Process Menu:
+    
+        1)  Add Car to the Garage.
+        2)  Get Car out of the Garage.
+        3)  Check Garage Capacity.
+        4)  View all cars in the Garage.
+        5)  Check Arrival and Departure Counter.
+        6)  Yeet all cars out of the Garage.
+        7)  End Program. 
+    """
+    print(menu)
+
+    userInput = input("What do you want to do?: ")
+    if userInput.isdigit():
+        optionPass = userInput
+        processPass(optionPass)
+
+    else:
+        print("\n[Error] Carefully choose from the options above!")
+        time.sleep(3)      
+        clear()
+        time.sleep(2)
+        userOption()
+
+
+def processPass(option):
+
+    if option == "1":
+        addCar()
+
+    elif option == "2":
+        removeCar()
+
+    elif option == "3":
+        checkGarage("a")
+        print(carGarage)
+        time.sleep(5)
+        clear()
+        userOption()
+
+    elif option == "4":
+        return
+
+    elif option == "5":
+        return
+
+    elif option == "6":
+        yeetAll()
+        
+    elif option == "7":
+        print("\nThank you for using Garage Management.")
+        time.sleep(3)
+        print("Goodbye :)")
+        time.sleep(2)
+        clear()
+        exit()
+
+    else: 
+        print("\n[Error] Unknown command. Please try again :(")
+        time.sleep(3)
+        clear()
+        userOption()
+    
 
 def carEn():
     for car in carEntered.keys():
@@ -24,7 +105,33 @@ def carEx():
     carGone.append(tempGarage[yeet-1])
     tempGarage.pop()
 
-def newCar():
+def addCar():
+    print("\n[   Adding a Car to the Garage   ]")
+    print("[ Plate Number Example = ABC 123 ]")
+    newCar = str(input("\nNew Car's Plate Number: "))
+    if not newCar:
+        print("\n[Error] Please enter a Plate Number!")
+        time.sleep(3)      
+        clear()
+        time.sleep(2)
+        addCar()
+    else: 
+        if len(newCar) != 7:
+            print("\n[Error] Please follow the prescribed plate configuration!")
+            time.sleep(3)      
+            clear()
+            time.sleep(2)
+            addCar()
+
+        else:
+            cars.append(newCar)
+            carInit()
+    return
+
+def removeCar():
+    print("\n[   Please Enter the Leaving Car's Plate Number   ]")
+    print("Cars List: "+carGarage)
+    newCar = str(input("\nCar's Plate Number: "))
     return
 
 def checkGarage(string):
@@ -46,7 +153,7 @@ def checkCarHist():
     print(carExited)
 
 def carInit():
-    print("[ Start of Program ]\n")
+    print("[ Car Valet: ]")
     i=0
     for c in cars: 
         while i < len(cars):
@@ -93,7 +200,8 @@ def carExt():
             i+=1
     carEx()
 
-def main():
+
+def yeetAll():
     carInit()
     while (len(tempGarage) or len(carGarage)) != 0: 
         time.sleep(1)
@@ -107,8 +215,8 @@ def main():
         time.sleep(1)
     checkCarHist()
     time.sleep(5)
-    print("\n End of Program.")
     print("titiw :3")
 
-main()
+while True:
+    userOption()
 
